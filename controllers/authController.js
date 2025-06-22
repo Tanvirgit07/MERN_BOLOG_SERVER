@@ -46,6 +46,7 @@ const Login = async (req, res, next) => {
 
     const token = jwt.sign(
       {
+        _id: checkUser._id,
         name: checkUser.name,
         email: checkUser.email,
         avatar: checkUser.avatar,
@@ -68,4 +69,47 @@ const Login = async (req, res, next) => {
   } catch (error) {}
 };
 
-module.exports = { Register, Login };
+const GoogleLogin = async (req, res, next) => {
+  try {
+    const { email, name, avatar } = req.body;
+    let user = await User.findOne({ email: email });
+
+    if (!user) {
+     user = new User({
+        name: name,
+        email: email,
+        password: Math.random().toString(),
+        avatar: avatar
+      });
+
+      await user.save();
+    }
+
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        avatar: avatar,
+      },
+      process.env.JWT_SECRET
+    );
+
+    res.cookie("accessToken", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV == "production" ? "none" : "strict",
+      path: "/",
+    });
+
+    res.status(200).json({
+      success: true,
+      user,
+      message: "User Login Successfully !",
+    });
+  } catch (err) {
+    next(handleError(500, err.message))
+  }
+};
+
+module.exports = { Register, Login, GoogleLogin };
