@@ -112,4 +112,19 @@ const GoogleLogin = async (req, res, next) => {
   }
 };
 
-module.exports = { Register, Login, GoogleLogin };
+
+const Logout = async(req,res,next) => {
+  res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV == "production" ? "none" : "strict",
+      path: "/",
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "User logout successfully !"
+    })
+}
+
+module.exports = { Register, Login, GoogleLogin, Logout};
