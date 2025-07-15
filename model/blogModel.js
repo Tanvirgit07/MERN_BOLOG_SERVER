@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
-    author: {
+    authorId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "User",
     },
-    category: {
+    categoryId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true, 
         ref: "Category"
@@ -31,7 +31,12 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
+    },
+    publicId: {
+        type: String,
+        trim: true,
     }
+
 })
 
 

@@ -5,10 +5,10 @@ const blogRouter = express.Router()
 
 
 blogRouter.post("/create-blog",upload.single('image'), createBlog);
-blogRouter.post("/update-blog/:id", updateBlog);
-blogRouter.post("/delete-blog/:id", deleteBlog);
-blogRouter.post("/single-blog/:id", singleBlog);
-blogRouter.post("/all-blog", allBlog);
+blogRouter.put("/update-blog/:id",upload.single("image"), updateBlog);
+blogRouter.delete("/delete-blog/:id", deleteBlog);
+blogRouter.get("/single-blog/:id", singleBlog);
+blogRouter.get("/all-blog", allBlog);
 
 
 module.exports = blogRouter;
