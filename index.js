@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const authRoute = require("./routers/authRouter");
 const categoryRouter = require("./routers/categoryRoute");
+const blogRouter = require("./routers/blogRoute");
 const PORT = process.env.PORT || 5000
 
 dotenv.config();
@@ -36,6 +37,11 @@ app.use("/api", authRoute);
 
 // category router
 app.use("/api/category", categoryRouter);
+
+
+
+//Blog router
+app.use("/api/blog", blogRouter);
 
 
 
