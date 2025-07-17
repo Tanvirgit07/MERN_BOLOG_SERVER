@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const authRoute = require("./routers/authRouter");
 const categoryRouter = require("./routers/categoryRoute");
 const blogRouter = require("./routers/blogRoute");
+const commentRouter = require("./routers/commentRouter");
+const likeRouter = require("./routers/likeRouter");
 const PORT = process.env.PORT || 5000
 
 dotenv.config();
@@ -43,6 +45,13 @@ app.use("/api/category", categoryRouter);
 //Blog router
 app.use("/api/blog", blogRouter);
 
+
+//Comment router
+app.use("/api/comment", commentRouter)
+
+
+// Like router
+app.use("/api/like", likeRouter);
 
 
 app.listen(PORT,() => {
